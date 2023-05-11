@@ -1,80 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Firebase Realtime Database CRUD Example</title>
-    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-database.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD with Firebase</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Firebase Realtime Database CRUD Example</h1>
-    <form>
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" /><br />
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" /><br />
-      <button type="button" onclick="createUser()">Create</button>
-      <button type="button" onclick="readUsers()">Read</button>
-      <button type="button" onclick="updateUser()">Update</button>
-      <button type="button" onclick="deleteUser()">Delete</button>
-    </form>
-    <ul id="users"></ul>
+    <div class="container">
+      <h2>CRUD with Firebase</h2>
+      <hr />
+      <br />
+      <div class="form">
+        RollNo: <input type="text" name="RollNo" id="roll" /> <br /><br />
+        Name:&nbsp; <input type="text" name="name" id="name" /> <br /><br />
+        Gender: <input type="text" name="gender" id="gender" /> <br /><br />
+        Address: <input type="text" name="Address" id="address" /> <br /><br />
+      </div>
 
-    <script>
-      // Initialize Firebase
-      var firebaseConfig = {
-        apiKey: "AIzaSyDJww2FdWpgqmJhyKHFexn5hAHz8axv50o",
-        authDomain: "templating-e157d.firebaseapp.com",
-        databaseURL:
-          "https://templating-e157d-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "templating-e157d",
-        storageBucket: "templating-e157d.appspot.com",
-        messagingSenderId: "1024435896137",
-        appId: "1:1024435896137:web:d931338822f9b008dfa498"
-      };
-      firebase.initializeApp(firebaseConfig);
+      <div class="buttons">
+        <button id="insert">Insert</button>
+        <button id="read">Read</button>
+        <button id="update">Update</button>
+        <button id="delete">Delete</button>
+      </div>
+    </div>
 
-      // Get a reference to the database service
-      var database = firebase.database();
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
 
-      // CRUD operations
-      function createUser() {
-        var name = document.getElementById("name").value;
-        var email = document.getElementById("email").value;
-        database.ref("users").push({
-          name: name,
-          email: email,
-        });
-      }
+    <script src="./fireConfig.js"></script>
 
-      function readUsers() {
-        var usersRef = database.ref("users");
-        usersRef.on("value", function (snapshot) {
-          var usersList = document.getElementById("users");
-          usersList.innerHTML = "";
-          snapshot.forEach(function (childSnapshot) {
-            var childData = childSnapshot.val();
-            var listItem = document.createElement("li");
-            listItem.innerText = childData.name + ": " + childData.email;
-            usersList.appendChild(listItem);
-          });
-        });
-      }
-
-      function updateUser() {
-        var name = document.getElementById("name").value;
-        var email = document.getElementById("email").value;
-        var updates = {};
-        updates["users/" + userId] = {
-          name: name,
-          email: email,
-        };
-        database.ref().update(updates);
-      }
-
-      function deleteUser() {
-        var userId = getUserId(); // implement a function to get the user ID
-        database.ref("users/" + userId).remove();
-      }
-    </script>
+    <script src="./myscript.js"></script>
   </body>
 </html>
